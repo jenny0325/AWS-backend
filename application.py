@@ -1,12 +1,12 @@
 import boto3
-from flask import Flask, render_template, request, jsonify, make_response
+from flask import Flask, render_template, request, jsonify, Response
 from flask_cors import CORS
 import os
 
 application = Flask(__name__)
 
 
-cors = CORS(application, resources={r"/api/*": {"origins": "*"}})
+cors = CORS(application, resources={r"/fileupload/*": {"origins": "*"}})
 
 
 @application.route('/')
@@ -28,6 +28,9 @@ def file_upload():
         Key=file.filename,
         ContentType=file.content_type
     )
+    res = Response("block")
+    res.headers["Access-control-Allow-Origin"] = "*"
+
 
     return jsonify({'result': 'success'})
 
