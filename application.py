@@ -4,15 +4,11 @@ from flask_cors import CORS
 import os
 
 application = Flask(__name__)
-
-
-cors = CORS(application, resources={r"/fileupload/*": {"origins": "*"}})
-
+cors = CORS(application, resources={r"/*": {"origins": "*"}})
 
 @application.route('/')
 def main():
     return "핵심 쏙쏙 AWS"
-
 
 @application.route('/fileupload', methods=['POST'])
 def file_upload():
@@ -28,24 +24,11 @@ def file_upload():
         Key=file.filename,
         ContentType=file.content_type
     )
+
     res = Response("block")
     res.headers["Access-control-Allow-Origin"] = "*"
 
-
     return jsonify({'result': 'success'})
-
-
-# def build_preflight_response():
-#     response = make_response()
-#     response.headers.add("Access-Control-Allow-Origin", "*")
-#     response.headers.add('Access-Control-Allow-Headers', "*")
-#     response.headers.add('Access-Control-Allow-Methods', "*")
-#     return response
-#
-#
-# def build_actual_response(response):
-#     response.headers.add("Access-Control-Allow-Origin", "*")
-#     return response
 
 if __name__ == '__main__':
     application.debug = True
