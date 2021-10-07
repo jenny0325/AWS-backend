@@ -4,7 +4,7 @@ from flask_cors import CORS
 import os
 
 application = Flask(__name__)
-cors = CORS(application, resources={r"/*": {"origins": "*"}})
+cors = CORS(application, resources={r"/fileupload/*": {"origins": "*"}})
 
 @application.route('/')
 def main():
